@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./css/output.css" rel="stylesheet" />
+    <title>Monitoreo de residenciales</title>
+  </head>
+  <body>
+    <div
+      class="w-full h-full text-black text-center bg-gradient-to-r bg-zinc-250"
+    >
+      <h1 class="text-3xl m-4 pt-4 font-bold">Monitoreo de residenciales</h1>
+      <div class="w-full h-screen bg-blue-700">
+        <div
+          id="container"
+          class="w-[90%] mx-auto h-screenflex flex-row flex-wrap p-4"
+        >
+          <div id="modal" class="modal w-[60%] h-[80%] bg-black">
+            <h1>test</h1>
+          </div>
+        </div>
+        <script>
+          console.log("funciones");
+
+          let tabla = document.getElementById("container");
+          const modal = document.getElementById("modal");
+          const btnOpenModal = document.getElementById("btn-open-modal");
+          const btnCloseModal = document.getElementById("btn-close-modal");
+
+          const getRaspberrysData = async () => {
+            try {
+              const url = `http://visitapp.la:4322/raspberrys/data`;
+              const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              });
+              if (response.ok) {
+                const data = await response.json();
+                console.log("data", data);
+                return data;
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          };
+
+          const getResidentials = async () => {
+            try {
+              const url = `http://visitapp.la:4322/residenciales/getAllResidentials`;
+              const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              });
+              if (response.ok) {
+                const data = await response.json();
+                return data;
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          };
+
+          const openModal = (e) => {
+            console.log(e.currentTarget.value)
+            modal.style.display = "block";
+          };
+
+          const closeModal = () => {
+            alert('close modal')
+            modal.style.display = "none";
+          };
+
+          window.onclick = function (event) {
+            if (event.target == modal) {
+              modal.style.display = "none";
+            }
+          };
+
+          
+
+
+          const createListItem = (data) => {
+            try {
+              tabla.innerHTML = "";
+
+              if (!data) {
+                console.log(`data is ${data}`);
+                tabla.innerHTML("");
+              }
+
+              data.forEach((residencial) => {
+                let item = document.createElement("div");
+                item.className = "w-full ";
+                console.log("residencial", residencial);
+                item.innerHTML = `
+   <div class="w-full h-1-6 flex  flex-wrap  p-4 m-8 bg-blue-400  rounded-xl cursor-pointer  value="${residencial.tenant}" hover:bg-white" id="${residencial.tenant}">
+      
+    <div class="w-1/6 h-1/6  flex justify-evenly">
+        <img  class="w-[60px] h-[55px]" src='./assets/images/monitor.png'>
+        </div>
+
+        <div class="w-1/6 flex flex-start  text-3xl px-4 font-semibold" >
+           ${residencial.tenant.toUpperCase()}
+        </div>
+
+        <div class="font-semibold w-2/6 h-[56px]  flex justify-evenly">
+        ${
+          residencial.estatus
+            ? ` <img  class="w-[60px] h-[55px]" src='./assets/images/correct.png'>`
+            : ` <img  class="w-[60px] h-[55px]" src='./assets/images/incorrect.png'>`
+        }  
+          </div>
+          <p class="font-semibold w-2/6 flex-wrap " >
+            Connected to: ${residencial.api_server} 
+            </p>
+         
+            </div>
+            `;
+            tabla.appendChild(item);
+            let contentItem=document.getElementById(residencial.tenant
+            );
+            contentItem.onclick=openModal;
+
+
+
+          });
+
+         
+            } catch (error) {
+              console.log(error);
+            }
+          };
+          
+
+
+
+
+          
+
+          const onloadResidentials = async () => {
+            try {
+              const data = await getResidentials();
+              if (!data.estatus) {
+                console.log(`${data.description}`);
+                return;
+              }
+
+              createListItem(data.data);
+            } catch (error) {
+              console.log(error);
+            }
+          };
+          onloadResidentials();
+          setInterval(() => {
+            onloadResidentials();
+          }, 60000);
+        </script>
+      </div>
+    </div>
+  </body>
+</html>

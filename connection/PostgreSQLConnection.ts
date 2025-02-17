@@ -1,0 +1,220 @@
+import { Pool, PoolClient } from 'pg';
+
+class PostgreSQLConnection {
+
+    private user: string;
+    private host: string;
+    private database: string;
+    private password: string;
+    private port: number;
+    private pool: Pool;
+
+    constructor() {
+        // this.user = "postgres";
+        // this.password = "";
+        // this.database = "pruebas_monitor_typescript";
+        // this.host = "localhost";
+        // this.port = 5432;
+
+
+        this.user = "crm_user";
+        this.password = "CRM_user1";
+        this.database = "pruebas_monitor_typescript";
+        this.host = "10.12.0.6";
+        this.port = 5432;
+
+        this.pool = new Pool({
+            user: this.user,
+            database: this.database,
+            password: this.password,
+            port: this.port,
+            max: 20,
+            idleTimeoutMillis: 1000,
+            host: this.host,
+        })
+
+    }
+
+
+    async executeQuery(query: string, values?: any[]) {
+        let client: PoolClient | undefined
+        let result;
+        try {
+            // console.log(query)
+            client = await this.pool.connect();
+            result = await client.query(query, values);
+            return result
+        } catch (error) {
+            console.error('Error executing query:', error);
+            console.log(error);
+        }
+        finally {
+            if (client) {
+                client.release();
+            }
+        }
+    }
+
+    async closePoolConnection() {
+
+        try {
+            await this.pool.end();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    async createTableIfNoExist(): Promise<void> {
+
+        try {
+
+            const tableName = `residenciales`;
+            const tableFields =
+                `
+                id_residencial SERIAL PRIMARY KEY,
+                tenant VARCHAR(30),
+                estatus INTEGER,
+                api_server VARCHAR(150),
+                lastUpdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+             `
+
+            const query = (`CREATE TABLE IF NOT EXISTS ${tableName}(
+                 ${tableFields}
+                );
+                `);
+            await this.executeQuery(query);
+
+
+        } catch (error) {
+            console.log(error)
+            return undefined;
+        }
+
+    }
+    async alterTableResidential(): Promise<void> {
+
+        try {
+
+           
+          
+
+            const query = (` ALTER TABLE residenciales
+      ADD COLUMN lastUpdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP;`);
+            await this.executeQuery(query);
+
+
+        } catch (error) {
+            console.log(error)
+            return undefined;
+        }
+
+    }
+    async createTableIfNoExistRaspberrys(): Promise<void> {
+        try {
+            const tableName = `raspberrys`;
+            const tableFields =
+                `
+                id_raspberry SERIAL PRIMARY KEY,
+                timestamp VARCHAR(60),
+                cpuUsage FLOAT,
+                memoryUsagePercentage FLOAT,
+                temperature FLOAT,
+                powerUsage FLOAT,
+                isConnected BOOLEAN,
+                hostname VARCHAR(60),
+                offlineCounter FLOAT
+             `
+            const query = (`CREATE TABLE IF NOT EXISTS ${tableName}(
+                 ${tableFields}
+                );
+                `)
+            await this.executeQuery(query);
+
+
+        } catch (error) {
+            console.log(error)
+            return undefined;
+        }
+    }
+    async createTableIfNotExistRoles(): Promise<void> {
+        try {
+            const tableName = `roles`;
+            const tableFields =
+                `
+                id_rol SERIAL PRIMARY KEY,
+                nombre VARCHAR(50) NOT NULL,
+                descripcion VARCHAR(60)
+             `
+            const query = (`CREATE TABLE IF NOT EXISTS ${tableName}(
+                 ${tableFields}
+                );
+                `)
+            await this.executeQuery(query);
+
+
+        } catch (error) {
+            console.log(error)
+            return undefined;
+        }
+    }
+    async createTableIfNotExistUsuarios(): Promise<void> {
+        try {
+            const tableName = `usuarios`;
+            const tableFields =
+                `
+                id_usuario SERIAL PRIMARY KEY,
+                userName VARCHAR(40),
+                email VARCHAR(60),
+                password VARCHAR(40),
+                estatus BOOLEAN,
+                id_rol  INTEGER,
+                FOREIGN KEY (id_rol) REFERENCES roles(id_rol)
+             `
+            const query = (`CREATE TABLE IF NOT EXISTS ${tableName}(
+                 ${tableFields}
+                );
+                `)
+            await this.executeQuery(query);
+
+
+        } catch (error) {
+            console.log(error)
+            return undefined;
+        }
+    }
+    async insertsPrueba(): Promise<void> {
+        try {
+            const tableName = `usuarios`;
+            const tableFields =
+                `
+                id_usuario SERIAL PRIMARY KEY,
+                userName VARCHAR(40),
+                email VARCHAR(60),
+                password VARCHAR(40),
+                estatus BOOLEAN,
+                id_rol  INTEGER,
+                FOREIGN KEY (id_rol) REFERENCES roles(id_rol)
+             `
+            const query = (`CREATE TABLE IF NOT EXISTS ${tableName}(
+                 ${tableFields}
+                );
+                `)
+            await this.executeQuery(query);
+
+
+        } catch (error) {
+            console.log(error)
+            return undefined;
+        }
+    }
+
+
+
+}
+
+
+
+
+
+export default PostgreSQLConnection;
