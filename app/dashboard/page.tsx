@@ -1,11 +1,11 @@
-import { Dashboard } from '@/components/Dashboard'
-import React from 'react'
+
+import { Sidebar } from "@/sidebar/Sidebar"
 
 function page() {
     return (
-        <>
-            <Dashboard />
-        </>
+        <div className="w-full h-screen ">
+            <Sidebar />
+        </div>
     )
 }
 

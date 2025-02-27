@@ -1,13 +1,12 @@
 'use client'
-
 import axios from "axios";
 import {  useEffect, useState } from "react";
 import { ResidentialInformation } from "@/types/residencial/residencialTypes";
-import CardResidential from "./CardResidential";
+import CardResidential from "../components/CardResidential";
 
 
 
-export const Dashboard = () => {
+export const ResidentialsGrid = () => {
 
 
   const [data, setData] = useState<ResidentialInformation[]>([])
