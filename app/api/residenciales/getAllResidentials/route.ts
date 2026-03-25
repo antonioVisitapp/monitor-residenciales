@@ -12,6 +12,7 @@ let conn;
     //    await conn.createTableIfNoExistRaspberrys();
     //    await conn.createTableIfNotExistUsuarios();
     // //    await conn.alterTableResidential();
+     await conn.createTableIfNotExistQrsHistory();
 
 
         const { estatus, data, description } = await getResidentials();
@@ -25,7 +26,5 @@ let conn;
     } catch (error) {
         console.log(error)
         return NextResponse.json(generateResponseFormat({ description: `${error}`, }))
-
-
     }
 }

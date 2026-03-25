@@ -15,8 +15,9 @@ export const formatDate = (stringDate: string) => {
             resp.estatus = true;
             resp.description = "success";
             const hours = date.getUTCHours();
-            const minutes = date.getUTCMinutes();
-            const seconds = date.getUTCSeconds();
+            const minutes = date.getUTCMinutes() < 10 ? `0${date.getUTCMinutes()}`:  date.getUTCMinutes()
+            const seconds = date.getUTCSeconds()
+            // resp.stringDate = `${date.toLocaleString()} a las ${hours}:${minutes}:${seconds}`;
             resp.stringDate = `${date.toLocaleDateString()} a las ${hours}:${minutes}:${seconds}`;
         }
         return resp

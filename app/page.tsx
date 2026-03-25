@@ -1,10 +1,8 @@
-import '../styles/globals.css'
-import { Login } from '@/components/login/Login';
+import { Login } from './login/Login';
 export default function Home() {
   return (
-    <main className="">
-
-      <Login />
-    </main>
+      <main className={`w-full h-screen`}>
+        <Login />
+      </main>
   );
 }

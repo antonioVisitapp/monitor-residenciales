@@ -20,8 +20,8 @@ class PostgreSQLConnection {
         this.user = "crm_user";
         this.password = "CRM_user1";
         this.database = "pruebas_monitor_typescript";
-        this.host = "10.12.0.6";
-        this.port = 5432;
+        this.host = "localhost";
+        this.port = 5433;
 
         this.pool = new Pool({
             user: this.user,
@@ -96,8 +96,8 @@ class PostgreSQLConnection {
 
         try {
 
-           
-          
+
+
 
             const query = (` ALTER TABLE residenciales
       ADD COLUMN lastUpdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP;`);
@@ -170,6 +170,33 @@ class PostgreSQLConnection {
                 estatus BOOLEAN,
                 id_rol  INTEGER,
                 FOREIGN KEY (id_rol) REFERENCES roles(id_rol)
+             `
+            const query = (`CREATE TABLE IF NOT EXISTS ${tableName}(
+                 ${tableFields}
+                );
+                `)
+            await this.executeQuery(query);
+
+
+        } catch (error) {
+            console.log(error)
+            return undefined;
+        }
+    }
+    async createTableIfNotExistQrsHistory(): Promise<void> {
+        try {
+            const tableName = `qr_scans`;
+            const tableFields =
+                `
+                id_qr SERIAL PRIMARY KEY,
+                userName VARCHAR(40),
+                tenant VARCHAR(40),
+                qr_code VARCHAR(60),
+                desc_visitapp VARCHAR(60),
+                liberacion_pulso BOOLEAN,
+                fecha  VARCHAR(60),
+                id_raspberry INTEGER
+                FOREIGN KEY (id_raspberry) REFERENCES raspberrys(id_raspberry)
              `
             const query = (`CREATE TABLE IF NOT EXISTS ${tableName}(
                  ${tableFields}

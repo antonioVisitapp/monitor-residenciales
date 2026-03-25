@@ -13,6 +13,11 @@ export interface Raspberry {
 
 
 
+export interface RaspberryCardProps {
+    hostname: string,
+    idx: number,
+    getRaspberryInformationByHostname:(hostname:string)=>{}
+}
 export interface RaspberryProps {
     id_raspberry: number,
     timestamp: string,

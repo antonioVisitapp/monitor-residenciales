@@ -24,7 +24,16 @@ export const addNewRaspberry = async ({
       hostName === undefined ||
       offLineCounter === undefined
     ) {
-      return generateResponseFormat({ description: "bad request" });
+      return generateResponseFormat({ data:{
+        timeStamp,
+        cpuUsage,
+        memoryUsagePercentage,
+        temperature,
+        powerUsage,
+        isConnected,
+        hostName,
+        offLineCounter,
+      }, description: "bad request" });
     }
     const db = new PostgreSQLConnection();
     const sqlQuery = `INSERT INTO raspberrys(
@@ -65,11 +74,11 @@ export const addNewRaspberry = async ({
   }
 };
 
-export const getAllRaspberrys = async (): Promise<FormatResponse> => {
+export const getAllRaspberriesExist = async (): Promise<FormatResponse> => {
   try {
     const limit = 100;
     const db = new PostgreSQLConnection();
-    const sqlQuery = `SELECT * FROM raspberrys LIMIT ${limit};`;
+    const sqlQuery = `SELECT DISTINCT hostname FROM raspberrys WHERE hostname LIKE '% %'  ORDER BY hostname ASC;`;
 
     const resp = await db.executeQuery(sqlQuery);
     if (resp && resp.rows) {
@@ -86,6 +95,7 @@ export const getAllRaspberrys = async (): Promise<FormatResponse> => {
     return generateResponseFormat({ data: 500, description: `${error}` });
   }
 };
+
 export const getAllRaspberrysByHostname = async (hostname:string): Promise<FormatResponse> => {
   try {
 console.log('getAllRaspberrysByHostname=>raspberryId',hostname)
@@ -137,6 +147,38 @@ export const getRaspberrysById = async (
     } else {
       return generateResponseFormat({
         description: `Error to search a raspberry with id ${id}`,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return generateResponseFormat({ description: `${error}` });
+  }
+};
+// * get raspberry information by tenant
+export const getRaspberrysByHostname = async (
+  hostname: string
+): Promise<FormatResponse> => {
+  try {
+    if (!hostname) {
+      return generateResponseFormat({
+        description: `Bad request, hostname is ${hostname}`,
+      });
+    }
+    const limit = 1;
+    const db = new PostgreSQLConnection();
+    const sqlQuery = `SELECT * FROM raspberrys WHERE hostname=$1 LIMIT $2 ;`;
+
+    const values = [hostname, limit];
+    const result = await db.executeQuery(sqlQuery, values);
+    if (result && result.rows) {
+      return generateResponseFormat({
+        estatus: true,
+        data: result.rows,
+        description: "Succesfully get raspberry´s information by hostname",
+      });
+    } else {
+      return generateResponseFormat({
+        description: `Error to search a raspberry with hostname ${hostname}`,
       });
     }
   } catch (error) {

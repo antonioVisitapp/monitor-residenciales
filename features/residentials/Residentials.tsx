@@ -2,7 +2,7 @@
 import axios from "axios";
 import {  useEffect, useState } from "react";
 import { ResidentialInformation } from "@/types/residencial/residencialTypes";
-import CardResidential from "../components/CardResidential";
+import CardResidential from "../../components/residentials/CardResidential";
 
 
 

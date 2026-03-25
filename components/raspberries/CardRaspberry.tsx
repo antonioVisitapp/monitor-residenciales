@@ -1,43 +1,35 @@
 "use client";
 
-import { RaspberryProps } from "@/types/raspberry/raspberryTypes";
+import { RaspberryCardProps } from "@/types/raspberry/raspberryTypes";
 import Image from "next/image";
 
 const CardRaspberry = ({
-  id_raspberry,
-  timestamp,
-  cpuusage,
-  memoryusagepercentage,
-  temperature,
-  powerusage,
-  isconnected,
   hostname,
-  offlinecounter,
   idx,
-  getRaspberryInformation
-}: RaspberryProps) => {
+  getRaspberryInformationByHostname
+}: RaspberryCardProps) => {
   const isPar = idx % 2 === 0;
   const backgroundColor = isPar ? "bg-white" : "bg-[#1D6FF1]";
   const textColor = isPar ? "text-slate-700" : "text-white";
 
- 
-
   return (
-    <>
-      <div
-      onClick={()=>{
-        getRaspberryInformation(id_raspberry)
-      }}
-        className={`min-w-min flex flex-row shadow-xl ${
-          isPar ? "flex-row" : "flex-row-reverse"
-        }
-         rounded-xl  cursor-pointer   p-2 m-4 ${backgroundColor} ${textColor} transform hover:scale-110 transition duration-300 ease-in-out  `}
+  
+      <div className={`min-w-min max-h-min  shadow-xl ${isPar ? "flex-row" : "flex-row-reverse"} p-4
+         rounded-xl  cursor-pointer   ${backgroundColor} ${textColor} 
+         transform hover:scale-110 transition duration-300 ease-in-out 
+         hover:z-50 hover:bg-[#FFB100]
+         `}
+        onClick={() => {
+          // console.log('click raspberry ', hostname)
+          getRaspberryInformationByHostname(hostname)
+        }}
       >
-        <div className={` flex   justify-between  gap-4 `}>
+        <div className={`flex justify-between `}>
           <div
-            className={`min-w-max flex rounded-full p-4 my-[30%] shadow-3xl ${
-              isPar ? "bg-[#1D6FF1]" : "bg-white"
-            }`}
+            className={`min-w-max flex rounded-full p-2  
+              selection:bg-[#006C67]
+              shadow-3xl ${isPar ? "bg-[#1D6FF1]" : "bg-white"
+              }`}
           >
             <Image
               width={150}
@@ -49,8 +41,8 @@ const CardRaspberry = ({
           </div>
         </div>
         <div className="">
-          <div className="text-3xl p-2">{hostname}</div>
-          <div className="text-base flex items-center m-4 p-4">
+          <div className="text-3xl p-2 flex-nowrap">{hostname}</div>
+          {/* <div className="text-base flex items-center m-4 p-4">
             <Image
               width={25}
               height={25}
@@ -58,8 +50,8 @@ const CardRaspberry = ({
               src={"/assets/images/temperatura.png"}
             />
             {temperature}
-          </div>
-          <div className="text-base flex items-center m-4 p-4">
+          </div> */}
+          {/* <div className="text-base flex items-center m-4 p-4">
             <Image
               width={25}
               height={25}
@@ -67,8 +59,8 @@ const CardRaspberry = ({
               src={"/assets/images/ram.png"}
             />
             {`${"RAM"}`}
-          </div>
-          <div className="text-base flex items-center m-4 p-4">
+          </div> */}
+          {/* <div className="text-base flex items-center m-4 p-4">
             <Image
               width={25}
               height={25}
@@ -76,10 +68,10 @@ const CardRaspberry = ({
               src={"/assets/images/internet.png"}
             />
             {`${"Internet"}`}
-          </div>
+          </div> */}
         </div>
       </div>
-    </>
+    
   );
 };
 
