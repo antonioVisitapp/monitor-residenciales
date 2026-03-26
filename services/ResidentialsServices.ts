@@ -216,9 +216,9 @@ export const sendEmail = async ({ to, subject, text, html }: SendMailProps): Pro
     let arrayResidentialsDown: ResidentialInformation[] = [];
     const result = await db.executeQuery(sqlQuery, values);
    
-    console.log('***************sendEmail**************************')
-    console.log(sqlQuery)
-    console.log(result)
+    // console.log('***************sendEmail**************************')
+    // console.log(sqlQuery)
+    // console.log(result)
     if (result?.rows === undefined) {
       return generateResponseFormat({ description: `result is ${result}` })
     }

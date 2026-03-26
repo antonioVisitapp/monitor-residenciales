@@ -1,4 +1,4 @@
-import { getIdResidentialByTenant } from "@/app/controllers/ResidentialsController";
+import { getIdResidentialByTenant } from "@/services/ResidentialsServices";
 import { generateResponseFormat } from "@/helpers/helpers";
 import { NextRequest, NextResponse } from "next/server";
 

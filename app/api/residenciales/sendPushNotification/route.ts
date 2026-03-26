@@ -1,4 +1,4 @@
-import { sendNotificactionRedidentialIsDown } from "@/app/controllers/ResidentialsController";
+import { sendNotificactionRedidentialIsDown } from "@/services/ResidentialsServices";
 import { generateResponseFormat } from "@/helpers/helpers";
 import { NextResponse } from "next/server";
 

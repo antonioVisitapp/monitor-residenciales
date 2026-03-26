@@ -1,4 +1,4 @@
-import {  getRaspberrysByTyAccess } from "@/app/controllers/RaspberrysController";
+import {  getRaspberrysByTyAccess } from "@/services/RaspberryServices";
 import { generateResponseFormat } from "@/helpers/helpers";
 import { NextRequest, NextResponse } from "next/server";
 

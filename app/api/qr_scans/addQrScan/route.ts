@@ -1,4 +1,4 @@
-import { addQrScan } from "@/app/controllers/QrScanController";
+import { addQrScan } from "@/services/QrScanController";
 import { NextResponse } from "next/server";
 
 

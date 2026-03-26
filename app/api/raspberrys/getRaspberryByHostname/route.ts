@@ -1,4 +1,4 @@
-import { getRaspberrysByHostname as getRaspberrysByHostname } from "@/app/controllers/RaspberrysController";
+import { getRaspberrysByHostname as getRaspberrysByHostname } from "@/services/RaspberryServices";
 import { generateResponseFormat } from "@/helpers/helpers";
 import { NextRequest, NextResponse } from "next/server";
 

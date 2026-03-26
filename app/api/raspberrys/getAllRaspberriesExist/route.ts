@@ -1,4 +1,4 @@
-import { getAllRaspberriesExist } from "@/app/controllers/RaspberrysController";
+import { getAllRaspberriesExist } from "@/services/RaspberryServices";
 import { NextResponse } from "next/server";
 
 export async function POST() {

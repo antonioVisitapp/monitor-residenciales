@@ -1,4 +1,4 @@
-import { setStatusDownToAllResidentials } from "@/app/controllers/ResidentialsController";
+import { setStatusDownToAllResidentials } from "@/services/ResidentialsServices";
 import { generateResponseFormat } from "@/helpers/helpers";
 import { NextResponse } from "next/server";
 

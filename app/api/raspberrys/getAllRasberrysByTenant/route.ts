@@ -1,4 +1,4 @@
-import {  getRaspberrysByResidential } from "@/app/controllers/RaspberrysController";
+import {  getRaspberrysByResidential } from "@/services/RaspberryServices";
 import { generateResponseFormat } from "@/helpers/helpers";
 import { NextRequest, NextResponse } from "next/server";
 

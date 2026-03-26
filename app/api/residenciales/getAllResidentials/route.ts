@@ -1,4 +1,4 @@
-import { getResidentials } from "@/app/controllers/ResidentialsController";
+import { getResidentials } from "@/services/ResidentialsServices";
 import PostgreSQLConnection from "@/connection/PostgreSQLConnection";
 import { generateResponseFormat } from "@/helpers/helpers";
 import { NextResponse } from "next/server";

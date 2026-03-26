@@ -1,4 +1,4 @@
-import { addResidential, getResidentials, updateStatusResidential } from "@/app/controllers/ResidentialsController";
+import { addResidential, getResidentials, updateStatusResidential } from "@/services/ResidentialsServices";
 import { generateResponseFormat } from "@/helpers/helpers";
 import { ResidentialInformation } from "@/types/residencial/residencialTypes";
 import { NextRequest, NextResponse } from "next/server";

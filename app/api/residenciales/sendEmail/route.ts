@@ -1,4 +1,4 @@
-import { sendEmail } from "@/app/controllers/ResidentialsController";
+import { sendEmail } from "@/services/ResidentialsServices";
 import { generateResponseFormat } from "@/helpers/helpers";
 import { SendMailProps } from "@/types/email/emailTypes";
 import { NextResponse } from "next/server";
