@@ -40,12 +40,14 @@ class PostgreSQLConnection {
         let client: PoolClient | undefined
         let result;
         try {
-            // console.log(query)
             client = await this.pool.connect();
             result = await client.query(query, values);
             return result
         } catch (error) {
             console.error('Error executing query:', error);
+            
+            console.log(query);
+            console.log(values);
             console.log(error);
         }
         finally {

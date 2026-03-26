@@ -11,8 +11,9 @@ let conn;
     //    await conn.createTableIfNoExist();
     //    await conn.createTableIfNoExistRaspberrys();
     //    await conn.createTableIfNotExistUsuarios();
-    // //    await conn.alterTableResidential();
-     await conn.createTableIfNotExistQrsHistory();
+    // //    aw
+    // ait conn.alterTableResidential();
+    //  await conn.createTableIfNotExistQrsHistory();
 
 
         const { estatus, data, description } = await getResidentials();

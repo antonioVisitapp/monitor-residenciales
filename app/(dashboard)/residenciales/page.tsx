@@ -1,4 +1,4 @@
-'use client'
+
 import GridContainer from "@/components/GridContainer";
 import CardResidential from "@/components/residentials/CardResidential";
 import BlueSpinner from "@/components/spinner/BlueSpinner";
@@ -11,15 +11,18 @@ function page() {
 
 
     const [data, setData] = useState<ResidentialInformation[]>([])
-
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const handleResidentials = async () => {
         try {
+            setIsLoading(true);
             const { data } = await axios.post(`/api/residenciales/getAllResidentials`, {});
             if (!data.estatus) {
                 console.log(data);
                 return;
             }
             setData(data.data);
+            setIsLoading(false)
+
         } catch (error) {
             console.log(error);
         }
@@ -61,6 +64,7 @@ function page() {
 
 
     useEffect(() => {
+
         handleResidentials()
 
         const intervalId1 = setInterval(() => {
@@ -81,7 +85,6 @@ function page() {
             clearInterval(intervalId1);
             clearInterval(intervalId2);
             clearInterval(intervalId3);
-
         };
     }, [])
 
@@ -90,22 +93,25 @@ function page() {
         <div className={`w-full h-full 
             overflow-scroll
         `}>
-            <GridContainer
-                component={
-                    data && data.length > 0 &&
-                    // <div className="w-full h-screen overflow-scroll bg-green-300">
-                    //     {
+            {isLoading ?
+                <BlueSpinner />
+                : <GridContainer
+                    component={
+                        data && data.length > 0 &&
+                        // <div className="w-full h-screen overflow-scroll bg-green-300">
+                        //     {
 
-                            data.map((residential: ResidentialInformation) => (
-                                <CardResidential
+                        data.map((residential: ResidentialInformation) => (
+                            <CardResidential
                                 key={residential.tenant}
                                 {...residential}
-                                />
-                            ))
+                            />
+                        ))
                         // }
-                    //  </div>
-                }
-            />
+                        //  </div>
+                    }
+                />
+            }
 
         </div>
     )

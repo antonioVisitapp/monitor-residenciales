@@ -14,10 +14,10 @@ function CardResidential({ tenant, estatus, api_server, lastconnection }: CardRe
 
   return (
 
-    <Link href={`/${tenant}`} className="w-full  max-h-[32vh] 
+    <Link href={`/${tenant}`} className="w-full   h-full
     flex flex-col justify-center items-center lg:p-8
     rounded-2xl  bg-[#1D6FF1] cursor-pointer
-    hover:bg-[#FFB100] text-white p-2
+    hover:bg-[#FFB100] text-white 
     ">
 
       <div className="w-full flex justify-around items-center  p-2 ">
