@@ -21,7 +21,7 @@ class PostgreSQLConnection {
         this.password = "CRM_user1";
         this.database = "pruebas_monitor_typescript";
         this.host = "localhost";
-        this.port = 5433;
+        this.port = 5432;
 
         this.pool = new Pool({
             user: this.user,
