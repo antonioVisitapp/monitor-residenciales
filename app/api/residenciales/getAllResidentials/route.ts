@@ -11,8 +11,7 @@ let conn;
     //    await conn.createTableIfNoExist();
     //    await conn.createTableIfNoExistRaspberrys();
     //    await conn.createTableIfNotExistUsuarios();
-    // //    aw
-    // ait conn.alterTableResidential();
+    //    await conn.alterTableResidential();
     //  await conn.createTableIfNotExistQrsHistory();
 
 
