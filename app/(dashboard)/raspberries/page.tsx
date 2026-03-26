@@ -14,9 +14,10 @@ type RaspberryItem = {
 }
 export default function page() {
 
+
+    const params=useParams();
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [params, setParams] = useState<Record<string, string>>(useParams());
     const [raspberries, setRaspBerries] = useState<RaspberryItem[]>([]);
     const [raspberryInformation, setRaspberryInformation] = useState<Raspberry>({
         cpuusage: 0,
@@ -80,13 +81,13 @@ export default function page() {
 
     useEffect(() => {
 
-        if (params.tenant === "login") {
+        if (params?.tenant === "login") {
             console.log('redireccion al login');
 
         }
 
         getAllRaspberriesExist();
-    }, [params.tenant]);
+    }, [params?.tenant]);
 
 
 
