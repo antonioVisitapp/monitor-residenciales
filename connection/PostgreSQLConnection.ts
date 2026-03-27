@@ -2,35 +2,19 @@ import { Pool, PoolClient } from 'pg';
 
 class PostgreSQLConnection {
 
-    private user: string;
-    private host: string;
-    private database: string;
-    private password: string;
-    private port: number;
+    
     private pool: Pool;
 
     constructor() {
-        // this.user = "postgres";
-        // this.password = "";
-        // this.database = "pruebas_monitor_typescript";
-        // this.host = "localhost";
-        // this.port = 5432;
-
-
-        this.user = "crm_user";
-        this.password = "CRM_user1";
-        this.database = "pruebas_monitor_typescript";
-        this.host = "localhost";
-        this.port = 5432;
 
         this.pool = new Pool({
-            user: this.user,
-            database: this.database,
-            password: this.password,
-            port: this.port,
-            max: 20,
-            idleTimeoutMillis: 1000,
-            host: this.host,
+            host:process.env.DB_HOST,
+            user:process.env.DB_USER,
+            password:process.env.DB_PASSWORD,
+            database:process.env.DB_DATABASE,
+            port:5433 ,
+            max:20,
+            idleTimeoutMillis:10000,
         })
 
     }
