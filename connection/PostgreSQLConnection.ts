@@ -12,7 +12,7 @@ class PostgreSQLConnection {
             user:process.env.DB_USER,
             password:process.env.DB_PASSWORD,
             database:process.env.DB_DATABASE,
-            port:5433 ,
+            port:5432 ,
             max:20,
             idleTimeoutMillis:10000,
         })
