@@ -4,8 +4,10 @@ services:
    
    monitoreo:
     build: .
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     container_name: visitapp_monitor    
-
+    
     ports:
       - "3000:3000"
 
