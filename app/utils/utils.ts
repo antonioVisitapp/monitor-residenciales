@@ -8,18 +8,20 @@ export const formatDate = (stringDate: string) => {
     }
     try {
         if (!stringDate) {
+            resp.estatus=false;
             resp.description = `Error to set format stringDate id :${stringDate}`
         }
-        else {
-            let date = new Date(stringDate);
-            resp.estatus = true;
-            resp.description = "success";
-            const hours = date.getUTCHours();
-            const minutes = date.getUTCMinutes() < 10 ? `0${date.getUTCMinutes()}`:  date.getUTCMinutes()
-            const seconds = date.getUTCSeconds()
-            // resp.stringDate = `${date.toLocaleString()} a las ${hours}:${minutes}:${seconds}`;
-            resp.stringDate = `${date.toLocaleDateString()} a las ${hours}:${minutes}:${seconds}`;
-        }
+        let date = new Date(stringDate);
+
+        resp.stringDate = date.toLocaleString('es-MX', {
+            timeZone: "America/Mexico_City",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+        });
         return resp
     } catch (error) {
         resp.description = `${error}`

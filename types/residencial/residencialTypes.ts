@@ -24,9 +24,9 @@ export interface ResponseGenerateResponse {
     description: string,
 }
 
-export interface FormatResponse {
+export interface FormatResponse<T> {
     estatus: boolean,
-    data: [] | null,
+    data: T | null,
     description: string,
 }
 

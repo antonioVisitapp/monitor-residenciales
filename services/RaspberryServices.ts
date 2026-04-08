@@ -1,6 +1,6 @@
 import PostgreSQLConnection from "@/connection/PostgreSQLConnection";
 import { generateResponseFormat } from "@/helpers/helpers";
-import { AddNewRaspberryParams } from "@/types/raspberry/raspberryTypes";
+import { AddNewRaspberryParams, Raspberry } from "@/types/raspberry/raspberryTypes";
 import { FormatResponse } from "@/types/residencial/residencialTypes";
 
 export const addNewRaspberry = async ({
@@ -74,7 +74,7 @@ export const addNewRaspberry = async ({
   }
 };
 
-export const getAllRaspberriesExist = async (): Promise<FormatResponse> => {
+export const getAllRaspberriesExist = async (): Promise<FormatResponse<any[]>> => {
   try {
     const limit = 100;
     const db = new PostgreSQLConnection();
@@ -96,7 +96,7 @@ export const getAllRaspberriesExist = async (): Promise<FormatResponse> => {
   }
 };
 
-export const getAllRaspberrysByHostname = async (hostname:string): Promise<FormatResponse> => {
+export const getAllRaspberrysByHostname = async (hostname:string): Promise<FormatResponse<Raspberry[]>> => {
   try {
 console.log('getAllRaspberrysByHostname=>raspberryId',hostname)
     if (!hostname || hostname==='') {
@@ -106,6 +106,7 @@ console.log('getAllRaspberrysByHostname=>raspberryId',hostname)
     const db = new PostgreSQLConnection();
     const values=[`%${hostname.replaceAll('-'," ")}%`];
     const sqlQuery = `SELECT * FROM raspberrys WHERE hostname ILIKE $1 ORDER BY id_raspberry DESC LIMIT ${limit};`;
+    console.log(sqlQuery)
     const resp = await db.executeQuery(sqlQuery,values);
     if (resp && resp.rows) {
       return generateResponseFormat({
@@ -125,7 +126,7 @@ console.log('getAllRaspberrysByHostname=>raspberryId',hostname)
 // //TODO obtener la info de una raspberry por id
 export const getRaspberrysById = async (
   id: number
-): Promise<FormatResponse> => {
+): Promise<FormatResponse<any[]>> => {
   try {
     if (!id) {
       return generateResponseFormat({
@@ -157,7 +158,7 @@ export const getRaspberrysById = async (
 // * get raspberry information by tenant
 export const getRaspberrysByHostname = async (
   hostname: string
-): Promise<FormatResponse> => {
+): Promise<FormatResponse<any[]>> => {
   try {
     if (!hostname) {
       return generateResponseFormat({
@@ -188,7 +189,7 @@ export const getRaspberrysByHostname = async (
 };
 export const getRaspberrysByResidential = async (
   tenant: string
-): Promise<FormatResponse> => {
+): Promise<FormatResponse<any[]>> => {
   try {
     if (!tenant) {
       return generateResponseFormat({
@@ -219,7 +220,7 @@ export const getRaspberrysByResidential = async (
 };
 export const getRaspberrysByTyAccess = async (
   typeAccess: string
-): Promise<FormatResponse> => {
+): Promise<FormatResponse<any[]>> => {
   try {
     if (!typeAccess || typeAccess === "") {
       return generateResponseFormat({

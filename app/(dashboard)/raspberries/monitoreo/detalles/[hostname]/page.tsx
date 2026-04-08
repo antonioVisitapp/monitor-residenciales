@@ -1,109 +1,103 @@
-'use client'
-
 import { formatDate } from "@/app/utils/utils";
+import BlueSpinner from "@/components/spinner/BlueSpinner";
+import { getAllRaspberrysByHostname } from "@/services/RaspberryServices";
 import { Raspberry } from "@/types/raspberry/raspberryTypes";
-import axios from "axios";
-import { useParams } from "next/navigation"
-import { useEffect, useState } from "react";
 
+const getLogsByRaspberriyByHostname = async (hostname: string) => {
 
-function DetailRaspberrysScreen() {
-
-  let params = useParams();
-  const [logs, setLogs] = useState<Raspberry[] | undefined>(undefined)
-
-  const getLogsByRaspberryHostname = async (hostname: string) => {
-    try {
-      const { data } = await axios.post(`/api/raspberrys/getAllRaspberrysByHostname`, {
-        hostname: hostname
-      })
-
-      if (data.estatus) {
-        console.log(data.data)
-        setLogs(data.data)
-      }
-
-    } catch (error) {
-      console.log(error)
-    }
+  try {
+    // console.log('getLogsByRaspberriyByHostname hostname',hostname)
+    const { estatus, data, description } = await getAllRaspberrysByHostname(hostname);
+    if (!estatus) return
+    return data
+  } catch (error) {
+    console.log(error)
   }
+}
 
-  useEffect(() => {
-    let hostname=`${params.hostname}`
-    hostname.replaceAll('-',' ')
-    getLogsByRaspberryHostname(`${hostname}`);
-  }, [params])
+type Props = {
+  params: {
+    hostname: string;
+  }
+}
+async function page({ params }: Props) {
+  // console.log('params',params)
+
+
+  const logs = await getLogsByRaspberriyByHostname(params.hostname);
+
 
   return (
-    <>
-      <div className=" w-full h-full flex flex-col bg-slate-400">
-        <div className=" w-full h-full mx-auto">
+      <div className=" w-full h-full flex bg-slate-400 overflow-scroll">
+          {logs?
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {/* <th scope="col" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   ID
-                </th>
-                <th scope="col" className="px-6 py-3">
+                </th> */}
+                <th  className="">
                   Nombre
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th  className="">
                   Fecha
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th  className="">
                   CPU
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th  className="">
                   Memoria
-                </th><th scope="col" className="px-6 py-3">
+                </th><th  className="">
                   Temperatura
-                </th><th scope="col" className="px-6 py-3">
+                </th><th  className="">
                   Energia
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th  className="">
                   Desconexiones
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th  className="">
                   Estatus
                 </th>
-                
+
               </tr>
             </thead>
             <tbody>
-              {logs ?
+              {logs && logs.length > 0 &&
                 logs.map(log =>
                   <tr key={`${log.hostname}${log.timestamp}`} className="bg-white border-b dark:bg-gray-800 ">
-                    <td className="px-6 py-4">{log.id_raspberry}</td>
-                    <td className="px-6 py-4">{log.hostname}</td>
-                    <td className="px-6 py-4">{formatDate(log.timestamp)?.stringDate}</td>
-                    <td className="px-6 py-4">{log.cpuusage.toFixed(2)}</td>
-                    <td className="px-6 py-4">{`${log.memoryusagepercentage.toFixed(2)}%`}</td>
-                    <td className="px-6 py-4">{log.temperature}</td>
-                    <td className="px-6 py-4">{log.powerusage.toFixed(2)}</td>
-                    <td className="px-6 py-4 text-center">{log.offlinecounter}</td>
-                    <td className={`px-6 py-4 text-center text-white${log.isconnected?'bg-green-600 ':'bg-red-600 '}`}>{log.isconnected? 'Online' : 'Offline'}</td>
+                    {/* <td className="px-6 py-4">{log.id_raspberry}</td> */}
+                    <td className="">{log.hostname}</td>
+                    <td className="">{formatDate(log.timestamp)?.stringDate}</td>
+                    <td className="">{log.cpuusage.toFixed(2)}</td>
+                    <td className="">{`${log.memoryusagepercentage.toFixed(2)}%`}</td>
+                    <td className="">{log.temperature}</td>
+                    <td className="">{log.powerusage.toFixed(2)}</td>
+                    <td className=" text-center">{log.offlinecounter}</td>
+                    <td className={` text-center text-white${log.isconnected ? 'bg-green-600 ' : 'bg-red-600 '}`}>{log.isconnected ? 'Online' : 'Offline'}</td>
                   </tr>
                 )
-                :
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <td className="px-6 py-4">{'na'}</td>
-                  <td className="px-6 py-4">{'na'}</td>
-                  <td className="px-6 py-4">{'na'}</td>
-                  <td className="px-6 py-4">{'na'}</td>
-                  <td className="px-6 py-4">{'na'}</td>
-                  <td className="px-6 py-4">{'na'}</td>
-                  <td className="px-6 py-4">{'na'}</td>
-                  
-                </tr>
+                
+                // <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                //   <td className="px-6 py-4">{'na'}</td>
+                //   <td className="px-6 py-4">{'na'}</td>
+                //   <td className="px-6 py-4">{'na'}</td>
+                //   <td className="px-6 py-4">{'na'}</td>
+                //   <td className="px-6 py-4">{'na'}</td>
+                //   <td className="px-6 py-4">{'na'}</td>
+                //   <td className="px-6 py-4">{'na'}</td>
+
+                // </tr>
+               
               }
 
 
             </tbody>
           </table>
-        </div>
+          :
+            <BlueSpinner/>
+            }
       </div>
-    </>
   )
 }
 
-export default DetailRaspberrysScreen
+export default page

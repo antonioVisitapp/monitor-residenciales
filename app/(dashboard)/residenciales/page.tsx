@@ -17,24 +17,30 @@ const getResidentialCached = unstable_cache(
     }
 );
 
-async function page() {
+type Props = {
+    params: {
+        tenant: string;
+    }
+}
+async function page({params}:Props) {
 
 
-    const data=await getResidentialCached();
-console.log(data)
+    const data = await getResidentialCached();
+    console.log(data)
     return (
         <div className={`w-full h-full 
             overflow-scroll
         `}>
             <GridContainer
                 component={
-                    data && data.length > 0 &&
-                    data.map((residential: ResidentialInformation) => (
-                        <CardResidential
-                            key={residential.tenant}
-                            {...residential}
-                        />
-                    ))
+                    data && data.length > 0 ?
+                        data.map((residential: ResidentialInformation) => (
+                            <CardResidential
+                                key={residential.tenant}
+                                {...residential}
+                            />
+                        ))
+                        : <BlueSpinner />
                 }
             />
         </div>

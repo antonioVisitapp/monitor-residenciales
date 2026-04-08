@@ -2,19 +2,19 @@ import { Pool, PoolClient } from 'pg';
 
 class PostgreSQLConnection {
 
-    
+
     private pool: Pool;
 
     constructor() {
 
         this.pool = new Pool({
-            host:process.env.DB_HOST,
-            user:process.env.DB_USER,
-            password:process.env.DB_PASSWORD,
-            database:process.env.DB_DATABASE,
-            port:5432 ,
-            max:20,
-            idleTimeoutMillis:10000,
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_DATABASE,
+            port: parseInt(process.env.DB_PORT || '5432'),
+            max: 20,
+            idleTimeoutMillis: 10000,
         })
 
     }
@@ -29,7 +29,7 @@ class PostgreSQLConnection {
             return result
         } catch (error) {
             console.error('Error executing query:', error);
-            
+
             console.log(query);
             console.log(values);
             console.log(error);

@@ -27,4 +27,7 @@ psql -p 5432 -U crm_user -dpruebas_monitor_typescript
 ```
 SELECT * FROM raspberrys WHERE hostname like '%(residencial_name)%' 
 ```
+6. tunel de prueba para desarrollo
+```
+```
 

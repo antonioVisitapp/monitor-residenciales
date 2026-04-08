@@ -20,7 +20,7 @@ const CardRaspberry = ({
          hover:z-50 hover:bg-[#FFB100]
          `}
         onClick={() => {
-          // console.log('click raspberry ', hostname)
+          console.log('click raspberry ', hostname)
           getRaspberryInformationByHostname(hostname)
         }}
       >
@@ -42,33 +42,7 @@ const CardRaspberry = ({
         </div>
         <div className="">
           <div className="text-3xl p-2 flex-nowrap">{hostname}</div>
-          {/* <div className="text-base flex items-center m-4 p-4">
-            <Image
-              width={25}
-              height={25}
-              alt="raspberry-pi.png"
-              src={"/assets/images/temperatura.png"}
-            />
-            {temperature}
-          </div> */}
-          {/* <div className="text-base flex items-center m-4 p-4">
-            <Image
-              width={25}
-              height={25}
-              alt="raspberry-pi.png"
-              src={"/assets/images/ram.png"}
-            />
-            {`${"RAM"}`}
-          </div> */}
-          {/* <div className="text-base flex items-center m-4 p-4">
-            <Image
-              width={25}
-              height={25}
-              alt="raspberry-pi.png"
-              src={"/assets/images/internet.png"}
-            />
-            {`${"Internet"}`}
-          </div> */}
+         
         </div>
       </div>
     

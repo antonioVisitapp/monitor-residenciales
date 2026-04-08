@@ -46,7 +46,7 @@ export const RaspberryDetails = ({
         <div className="w-[90%] h-full flex flex-col md:flex-row items-center justify-center gap-8 p-4">
 
           <Link
-            href={`/raspberrys/monitoreo/detalles/${hostname.replaceAll(' ', '-')}`}
+            href={`/raspberries/monitoreo/detalles/${hostname.replaceAll(' ', '-')}`}
             className="p-4  bg-red-500 rounded-2xl cursor-pointer
           hover:bg-black hover:scale-110 ">Información Avanzada</Link>
           <Link href={`/raspberrys/monitoreo/detalles/${hostname.replaceAll(' ', '-')}`}

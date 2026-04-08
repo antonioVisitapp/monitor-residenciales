@@ -34,6 +34,7 @@ export default function page() {
     const handleRaspberrysByResidential = async (hostname: string) => {
         try {
             setIsLoading(true)
+            console.log('handleRaspberrysByResidential')
             console.log('/api/raspberry/getRaspberryByHostname')
             console.log(hostname)
             const { data } = await axios.post(
